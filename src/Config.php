@@ -7,12 +7,14 @@ use function Assert\that;
 
 class Config {
     const KEY_API_KEY = 'client';
+    const KEY_DEBUG = 'debug';
     const KEY_FROM = 'from';
     const KEY_HANDLER_BUBBLE = 'handler_bubble';
     const KEY_HANDLER_LOGGER_LEVEL = 'handler_logger_level';
     const KEY_TO = 'to';
 
     public $client;
+    public $debug;
     public $handlerLoggerLevel;
     public $handlerBubble;
     public $from;
@@ -25,15 +27,27 @@ class Config {
         ], $data);
 
         $this->setClient($data[static::KEY_API_KEY]);
+        $this->setDebug($data[static::KEY_DEBUG]);
         $this->setFrom($data[static::KEY_FROM]);
         $this->setHandlerBubble($data[static::KEY_HANDLER_BUBBLE]);
         $this->setHandlerLoggerLevel($data[static::KEY_HANDLER_LOGGER_LEVEL]);
         $this->setTo($data[static::KEY_TO]);
     }
 
+    public function getExtra() {
+        return [
+            'debug' => $this->debug,
+        ];
+    }
+
     private function setClient($apiKey) {
         that($apiKey)->scalar()->minLength(1);
         $this->client = new Client($apiKey, 'monolog');
+    }
+
+    private function setDebug($debug) {
+        that($debug)->nullOr()->inArray([0, 1]);
+        $this->debug = $debug;
     }
 
     private function setFrom($from) {

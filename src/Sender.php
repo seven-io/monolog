@@ -4,16 +4,22 @@ use Sms77\Api\Client;
 
 class Sender implements MessageSenderInterface {
     private $client;
+    private $extra;
     private $from;
     private $to;
 
-    public function __construct(Client $client, $from, $to) {
+    public function __construct(Client $client, $from, $to, array $extra = []) {
         $this->client = $client;
         $this->from = $from;
         $this->to = $to;
+        $this->extra = $extra;
     }
 
-    public function send($text) {
-        $this->client->sms($this->to, $text, ['from' => $this->from]);
+    public function send($message) {
+        $extra = array_merge($this->extra, [
+            'from' => $this->from,
+        ]);
+
+        $this->client->sms($this->to, $message, $extra);
     }
 }

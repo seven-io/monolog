@@ -16,7 +16,8 @@ class Handler extends AbstractProcessingHandler {
     }
 
     public static function buildFromConfig(Config $cfg) {
-        return new Handler(new Sender($cfg->client, $cfg->from, $cfg->to), $cfg);
+        $sender = new Sender($cfg->client, $cfg->from, $cfg->to, $cfg->getExtra());
+        return new Handler($sender, $cfg);
     }
 
     protected function write(array $record) {

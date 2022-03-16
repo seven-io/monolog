@@ -1,9 +1,9 @@
 {
     "authors": [
         {
-            "name": "André Matthies",
-            "email": "12965261+matthiez@users.noreply.github.com",
+            "email": "support@sms77.io",
             "homepage": "https://www.sms77.io",
+            "name": "sms77 e.K.",
             "role": "Developer"
         }
     ],
@@ -17,7 +17,12 @@
             "Sms77\\Monolog\\Tests\\": "tests/"
         }
     },
-    "description": "A Monolog Handler for sending SMS via Sms77",
+    "config": {
+        "platform": {
+            "php": "5.6.40"
+        }
+    },
+    "description": "A Monolog Handler for sending SMS via sms77",
     "homepage": "https://github.com/sms77io/monolog",
     "keywords": [
         "sms",
