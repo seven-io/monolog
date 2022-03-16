@@ -13,6 +13,7 @@ class Config {
     const KEY_FROM = 'from';
     const KEY_HANDLER_BUBBLE = 'handler_bubble';
     const KEY_HANDLER_LOGGER_LEVEL = 'handler_logger_level';
+    const KEY_JSON = 'json';
     const KEY_LABEL = 'label';
     const KEY_NO_RELOAD = 'no_reload';
     const KEY_PERFORMANCE_TRACKING = 'performance_tracking';
@@ -25,6 +26,7 @@ class Config {
     public $from;
     public $handlerLoggerLevel;
     public $handlerBubble;
+    public $json;
     public $label;
     public $noReload;
     public $performanceTracking;
@@ -54,6 +56,7 @@ class Config {
             self::KEY_DEBUG => $this->debug,
             self::KEY_FLASH => $this->flash,
             self::KEY_FOREIGN_ID => $this->foreignId,
+            self::KEY_JSON => $this->json,
             self::KEY_LABEL => $this->label,
             self::KEY_NO_RELOAD => $this->noReload,
             self::KEY_PERFORMANCE_TRACKING => $this->performanceTracking,
@@ -83,6 +86,11 @@ class Config {
     private function setFrom($from) {
         that($from)->scalar()->minLength(0)->maxLength(16);
         $this->from = $from;
+    }
+
+    private function setJSON($json) {
+        that($json)->nullOr()->inArray([0, 1]);
+        $this->json = $json;
     }
 
     private function setLabel($label) {

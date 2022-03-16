@@ -25,6 +25,7 @@ use Monolog\Logger;
         Config::KEY_FLASH => 0, // 0 or 1
         Config::KEY_FOREIGN_ID => 'MyForeignID', // optional foreign ID max 64 chars consisting of a-zA-Z0-9, ._@
         Config::KEY_FROM => 'Monolog', // optional sender - max 11 alphanumeric or 16 numeric characters
+        Config::KEY_JSON => 0, // 0 or 1
         Config::KEY_LABEL => 'MyLabel', // optional label max 100 chars consisting of a-zA-Z0-9, ._@
         Config::KEY_NO_RELOAD => 0, // 0 or 1
         Config::KEY_PERFORMANCE_TRACKING => 0, // 0 or 1
