@@ -13,6 +13,7 @@ class SmsTest extends PHPUnit_Framework_TestCase {
             Config::KEY_API_KEY => getenv('SMS77_DUMMY_API_KEY'),
             Config::KEY_DEBUG => 1,
             Config::KEY_FROM => 'MonologTest',
+            Config::KEY_PERFORMANCE_TRACKING => 1,
             Config::KEY_TO => '+491716992343',
         ]);
         $handler = new Handler($spy, $cfg);
@@ -34,6 +35,7 @@ class SmsTest extends PHPUnit_Framework_TestCase {
             Config::KEY_API_KEY => getenv('SMS77_API_KEY'),
             Config::KEY_DEBUG => 0,
             Config::KEY_FROM => 'Monolog',
+            Config::KEY_PERFORMANCE_TRACKING => 0,
             Config::KEY_TO => '+491716992343',
         ];
         $handler = Handler::buildFromArray($cfg);

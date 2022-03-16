@@ -11,6 +11,7 @@ class Config {
     const KEY_FROM = 'from';
     const KEY_HANDLER_BUBBLE = 'handler_bubble';
     const KEY_HANDLER_LOGGER_LEVEL = 'handler_logger_level';
+    const KEY_PERFORMANCE_TRACKING = 'performance_tracking';
     const KEY_TO = 'to';
 
     public $client;
@@ -18,6 +19,7 @@ class Config {
     public $handlerLoggerLevel;
     public $handlerBubble;
     public $from;
+    public $performanceTracking;
     public $to;
 
     public function __construct(array $data) {
@@ -31,12 +33,14 @@ class Config {
         $this->setFrom($data[static::KEY_FROM]);
         $this->setHandlerBubble($data[static::KEY_HANDLER_BUBBLE]);
         $this->setHandlerLoggerLevel($data[static::KEY_HANDLER_LOGGER_LEVEL]);
+        $this->setPerformanceTracking($data[static::KEY_PERFORMANCE_TRACKING]);
         $this->setTo($data[static::KEY_TO]);
     }
 
     public function getExtra() {
         return [
-            'debug' => $this->debug,
+            self::KEY_DEBUG => $this->debug,
+            self::KEY_PERFORMANCE_TRACKING => $this->performanceTracking,
         ];
     }
 
@@ -72,6 +76,11 @@ class Config {
             Logger::EMERGENCY,
         ]);
         $this->handlerLoggerLevel = $handlerLoggerLevel;
+    }
+
+    private function setPerformanceTracking($performanceTracking) {
+        that($performanceTracking)->nullOr()->inArray([0, 1]);
+        $this->performanceTracking = $performanceTracking;
     }
 
     private function setTo($to) {

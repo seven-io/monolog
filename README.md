@@ -23,6 +23,7 @@ use Monolog\Logger;
         Config::KEY_API_KEY => getenv('SMS77_API_KEY'), // sms77 API key required for sending
         Config::KEY_DEBUG => 0, // 0 or 1
         Config::KEY_FROM => 'Monolog', // optional sender - max 11 alphanumeric or 16 numeric characters
+        Config::KEY_PERFORMANCE_TRACKING => 0, // 0 or 1
         Config::KEY_TO => '+491716992343', // recipient(s) separated by comma
     ]))
     ->addCritical('critical bug');
