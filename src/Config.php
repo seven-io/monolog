@@ -8,6 +8,7 @@ use function Assert\that;
 class Config {
     const KEY_API_KEY = 'client';
     const KEY_DEBUG = 'debug';
+    const KEY_FLASH = 'flash';
     const KEY_FROM = 'from';
     const KEY_HANDLER_BUBBLE = 'handler_bubble';
     const KEY_HANDLER_LOGGER_LEVEL = 'handler_logger_level';
@@ -17,9 +18,10 @@ class Config {
 
     public $client;
     public $debug;
+    public $flash;
+    public $from;
     public $handlerLoggerLevel;
     public $handlerBubble;
-    public $from;
     public $noReload;
     public $performanceTracking;
     public $to;
@@ -32,6 +34,7 @@ class Config {
 
         $this->setClient($data[static::KEY_API_KEY]);
         $this->setDebug($data[static::KEY_DEBUG]);
+        $this->setFlash($data[static::KEY_FLASH]);
         $this->setFrom($data[static::KEY_FROM]);
         $this->setHandlerBubble($data[static::KEY_HANDLER_BUBBLE]);
         $this->setHandlerLoggerLevel($data[static::KEY_HANDLER_LOGGER_LEVEL]);
@@ -43,6 +46,7 @@ class Config {
     public function getExtra() {
         return [
             self::KEY_DEBUG => $this->debug,
+            self::KEY_FLASH => $this->flash,
             self::KEY_NO_RELOAD => $this->noReload,
             self::KEY_PERFORMANCE_TRACKING => $this->performanceTracking,
         ];
@@ -56,6 +60,11 @@ class Config {
     private function setDebug($debug) {
         that($debug)->nullOr()->inArray([0, 1]);
         $this->debug = $debug;
+    }
+
+    private function setFlash($flash) {
+        that($flash)->nullOr()->inArray([0, 1]);
+        $this->flash = $flash;
     }
 
     private function setFrom($from) {

@@ -12,6 +12,7 @@ class SmsTest extends PHPUnit_Framework_TestCase {
         $cfg = new Config([
             Config::KEY_API_KEY => getenv('SMS77_DUMMY_API_KEY'),
             Config::KEY_DEBUG => 1,
+            Config::KEY_FLASH => 0,
             Config::KEY_FROM => 'MonologTest',
             Config::KEY_NO_RELOAD => 0,
             Config::KEY_PERFORMANCE_TRACKING => 1,
@@ -35,6 +36,7 @@ class SmsTest extends PHPUnit_Framework_TestCase {
         $cfg = [
             Config::KEY_API_KEY => getenv('SMS77_API_KEY'),
             Config::KEY_DEBUG => 0,
+            Config::KEY_FLASH => 1,
             Config::KEY_FROM => 'Monolog',
             Config::KEY_NO_RELOAD => 1,
             Config::KEY_PERFORMANCE_TRACKING => 0,
