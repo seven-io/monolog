@@ -9,6 +9,7 @@ class Config {
     const KEY_API_KEY = 'client';
     const KEY_DEBUG = 'debug';
     const KEY_FLASH = 'flash';
+    const KEY_FOREIGN_ID = 'foreign_id';
     const KEY_FROM = 'from';
     const KEY_HANDLER_BUBBLE = 'handler_bubble';
     const KEY_HANDLER_LOGGER_LEVEL = 'handler_logger_level';
@@ -20,6 +21,7 @@ class Config {
     public $client;
     public $debug;
     public $flash;
+    public $foreignId;
     public $from;
     public $handlerLoggerLevel;
     public $handlerBubble;
@@ -37,6 +39,7 @@ class Config {
         $this->setClient($data[static::KEY_API_KEY]);
         $this->setDebug($data[static::KEY_DEBUG]);
         $this->setFlash($data[static::KEY_FLASH]);
+        $this->setForeignId($data[static::KEY_FOREIGN_ID]);
         $this->setFrom($data[static::KEY_FROM]);
         $this->setHandlerBubble($data[static::KEY_HANDLER_BUBBLE]);
         $this->setHandlerLoggerLevel($data[static::KEY_HANDLER_LOGGER_LEVEL]);
@@ -50,6 +53,7 @@ class Config {
         return [
             self::KEY_DEBUG => $this->debug,
             self::KEY_FLASH => $this->flash,
+            self::KEY_FOREIGN_ID => $this->foreignId,
             self::KEY_LABEL => $this->label,
             self::KEY_NO_RELOAD => $this->noReload,
             self::KEY_PERFORMANCE_TRACKING => $this->performanceTracking,
@@ -69,6 +73,11 @@ class Config {
     private function setFlash($flash) {
         that($flash)->nullOr()->inArray([0, 1]);
         $this->flash = $flash;
+    }
+
+    private function setForeignId($foreignId) {
+        that($foreignId)->nullOr()->scalar()->minLength(0)->maxLength(64)->regex('/[a-zA-Z0-9, ._@]/');
+        $this->foreignId = $foreignId;
     }
 
     private function setFrom($from) {
