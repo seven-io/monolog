@@ -12,6 +12,7 @@ class Config {
     const KEY_FROM = 'from';
     const KEY_HANDLER_BUBBLE = 'handler_bubble';
     const KEY_HANDLER_LOGGER_LEVEL = 'handler_logger_level';
+    const KEY_LABEL = 'label';
     const KEY_NO_RELOAD = 'no_reload';
     const KEY_PERFORMANCE_TRACKING = 'performance_tracking';
     const KEY_TO = 'to';
@@ -22,6 +23,7 @@ class Config {
     public $from;
     public $handlerLoggerLevel;
     public $handlerBubble;
+    public $label;
     public $noReload;
     public $performanceTracking;
     public $to;
@@ -38,6 +40,7 @@ class Config {
         $this->setFrom($data[static::KEY_FROM]);
         $this->setHandlerBubble($data[static::KEY_HANDLER_BUBBLE]);
         $this->setHandlerLoggerLevel($data[static::KEY_HANDLER_LOGGER_LEVEL]);
+        $this->setLabel($data[static::KEY_LABEL]);
         $this->setNoReload($data[static::KEY_NO_RELOAD]);
         $this->setPerformanceTracking($data[static::KEY_PERFORMANCE_TRACKING]);
         $this->setTo($data[static::KEY_TO]);
@@ -47,6 +50,7 @@ class Config {
         return [
             self::KEY_DEBUG => $this->debug,
             self::KEY_FLASH => $this->flash,
+            self::KEY_LABEL => $this->label,
             self::KEY_NO_RELOAD => $this->noReload,
             self::KEY_PERFORMANCE_TRACKING => $this->performanceTracking,
         ];
@@ -70,6 +74,11 @@ class Config {
     private function setFrom($from) {
         that($from)->scalar()->minLength(0)->maxLength(16);
         $this->from = $from;
+    }
+
+    private function setLabel($label) {
+        that($label)->nullOr()->scalar()->minLength(0)->maxLength(100)->regex('/[a-zA-Z0-9, ._@]/');
+        $this->label = $label;
     }
 
     private function setHandlerBubble($handlerBubble) {
