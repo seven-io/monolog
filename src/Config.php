@@ -51,6 +51,7 @@ class Config {
         $this->setHandlerBubble($data[static::KEY_HANDLER_BUBBLE]);
         $this->setHandlerLoggerLevel($data[static::KEY_HANDLER_LOGGER_LEVEL]);
         $this->setLabel($data[static::KEY_LABEL]);
+        $this->setJSON($data[static::KEY_JSON]);
         $this->setNoReload($data[static::KEY_NO_RELOAD]);
         $this->setPerformanceTracking($data[static::KEY_PERFORMANCE_TRACKING]);
         $this->setTo($data[static::KEY_TO]);
