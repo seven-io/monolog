@@ -5,10 +5,10 @@ use Monolog\Logger;
 use function Assert\that;
 
 class Config {
-    const KEY_API_KEY = 'apiKey';
-    const KEY_APP = '_app';
     const APP_SMS = 'sms';
     const APP_VOICE = 'voice';
+    const KEY_API_KEY = 'apiKey';
+    const KEY_APP = '_app';
     const KEY_DEBUG = 'debug';
     const KEY_FLASH = 'flash';
     const KEY_FOREIGN_ID = 'foreign_id';
@@ -21,25 +21,77 @@ class Config {
     const KEY_PERFORMANCE_TRACKING = 'performance_tracking';
     const KEY_TO = 'to';
 
-    public $apiKey;
-    public $app = self::APP_SMS;
-    public $debug;
-    public $flash;
-    public $foreignId;
-    public $from;
-    public $handlerLoggerLevel = Logger::CRITICAL;
-    public $handlerBubble = true;
-    public $json;
-    public $label;
-    public $noReload;
-    public $performanceTracking;
-    public $to;
+    protected $apiKey;
+    protected $app = self::APP_SMS;
+    protected $debug;
+    protected $flash;
+    protected $foreignId;
+    protected $from;
+    protected $handlerLoggerLevel = Logger::CRITICAL;
+    protected $handlerBubble = true;
+    protected $json;
+    protected $label;
+    protected $noReload;
+    protected $performanceTracking;
+    protected $to;
 
     private $data;
 
     public function __construct(array $data) {
         $this->data = $data;
         $this->init();
+    }
+
+    public function getApiKey() {
+        return $this->apiKey;
+    }
+
+    public function getApp() {
+        return $this->app;
+    }
+
+    public function getDebug() {
+        return $this->debug;
+    }
+
+    public function getFlash() {
+        return $this->flash;
+    }
+
+    public function getForeignID() {
+        return $this->foreignId;
+    }
+
+    public function getFrom() {
+        return $this->from;
+    }
+
+    public function getHandlerBubble() {
+        return $this->handlerBubble;
+    }
+
+    public function getHandlerLoggerLevel() {
+        return $this->handlerLoggerLevel;
+    }
+
+    public function getJSON() {
+        return $this->json;
+    }
+
+    public function getLabel() {
+        return $this->label;
+    }
+
+    public function getNoReload() {
+        return $this->noReload;
+    }
+
+    public function getPerformanceTracking() {
+        return $this->performanceTracking;
+    }
+
+    public function getTo() {
+        return $this->to;
     }
 
     public function getExtra() {

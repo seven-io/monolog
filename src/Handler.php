@@ -7,8 +7,7 @@ class Handler extends AbstractProcessingHandler {
     private $sender;
 
     public function __construct(MessageSenderInterface $sender, Config $config) {
-        parent::__construct($config->handlerLoggerLevel, $config->handlerBubble);
-
+        parent::__construct($config->getHandlerLoggerLevel(), $config->getHandlerBubble());
         $this->sender = $sender;
     }
 
@@ -17,8 +16,8 @@ class Handler extends AbstractProcessingHandler {
     }
 
     public static function buildFromConfig(Config $cfg) {
-        $client = new Client($cfg->apiKey, 'monolog');
-        $sender = new Sender($client, $cfg->to, $cfg->app, $cfg->getExtra());
+        $client = new Client($cfg->getApiKey(), 'monolog');
+        $sender = new Sender($client, $cfg->getTo(), $cfg->getApp(), $cfg->getExtra());
         return new Handler($sender, $cfg);
     }
 
