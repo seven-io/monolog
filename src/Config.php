@@ -28,33 +28,19 @@ class Config {
     public $flash;
     public $foreignId;
     public $from;
-    public $handlerLoggerLevel;
-    public $handlerBubble;
+    public $handlerLoggerLevel = Logger::CRITICAL;
+    public $handlerBubble = true;
     public $json;
     public $label;
     public $noReload;
     public $performanceTracking;
     public $to;
 
-    public function __construct(array $data) {
-        $data = array_merge([
-            static::KEY_HANDLER_BUBBLE => true,
-            static::KEY_HANDLER_LOGGER_LEVEL => Logger::CRITICAL,
-        ], $data);
+    private $data;
 
-        $this->setApp($data[static::KEY_APP]);
-        $this->setClient($data[static::KEY_API_KEY]);
-        $this->setDebug($data[static::KEY_DEBUG]);
-        $this->setFlash($data[static::KEY_FLASH]);
-        $this->setForeignId($data[static::KEY_FOREIGN_ID]);
-        $this->setFrom($data[static::KEY_FROM]);
-        $this->setHandlerBubble($data[static::KEY_HANDLER_BUBBLE]);
-        $this->setHandlerLoggerLevel($data[static::KEY_HANDLER_LOGGER_LEVEL]);
-        $this->setLabel($data[static::KEY_LABEL]);
-        $this->setJSON($data[static::KEY_JSON]);
-        $this->setNoReload($data[static::KEY_NO_RELOAD]);
-        $this->setPerformanceTracking($data[static::KEY_PERFORMANCE_TRACKING]);
-        $this->setTo($data[static::KEY_TO]);
+    public function __construct(array $data) {
+        $this->data = $data;
+        $this->init();
     }
 
     public function getExtra() {
@@ -75,52 +61,88 @@ class Config {
         return $extra;
     }
 
-    private function setApp($app) {
+    private function setApp() {
+        $key = static::KEY_APP;
+        $app = array_key_exists($key, $this->data) ? $this->data[$key] : $this->app;
         that($app)->nullOr()->inArray([static::APP_SMS, static::APP_VOICE]);
         $this->app = $app;
     }
 
-    private function setClient($apiKey) {
+    private function init() {
+        $this->setApp();
+        $this->setClient();
+        $this->setDebug();
+        $this->setFlash();
+        $this->setForeignId();
+        $this->setFrom();
+        $this->setHandlerBubble();
+        $this->setHandlerLoggerLevel();
+        $this->setLabel();
+        $this->setJSON();
+        $this->setNoReload();
+        $this->setPerformanceTracking();
+        $this->setTo();
+    }
+
+    private function setClient() {
+        $key = static::KEY_API_KEY;
+        $apiKey = array_key_exists($key, $this->data) ? $this->data[$key] : $this->client;
         that($apiKey)->scalar()->minLength(1);
         $this->client = new Client($apiKey, 'monolog');
     }
 
-    private function setDebug($debug) {
+    private function setDebug() {
+        $key = static::KEY_DEBUG;
+        $debug = array_key_exists($key, $this->data) ? $this->data[$key] : $this->debug;
         that($debug)->nullOr()->inArray([0, 1]);
         $this->debug = $debug;
     }
 
-    private function setFlash($flash) {
+    private function setFlash() {
+        $key = static::KEY_FLASH;
+        $flash = array_key_exists($key, $this->data) ? $this->data[$key] : $this->flash;
         that($flash)->nullOr()->inArray([0, 1]);
         $this->flash = $flash;
     }
 
-    private function setForeignId($foreignId) {
+    private function setForeignId() {
+        $key = static::KEY_FOREIGN_ID;
+        $foreignId = array_key_exists($key, $this->data) ? $this->data[$key] : $this->foreignId;
         that($foreignId)->nullOr()->scalar()->minLength(0)->maxLength(64)->regex('/[a-zA-Z0-9, ._@]/');
         $this->foreignId = $foreignId;
     }
 
-    private function setFrom($from) {
+    private function setFrom() {
+        $key = static::KEY_FROM;
+        $from = array_key_exists($key, $this->data) ? $this->data[$key] : $this->from;
         that($from)->nullOr()->scalar()->minLength(0)->maxLength(16);
         $this->from = $from;
     }
 
-    private function setJSON($json) {
+    private function setJSON() {
+        $key = static::KEY_JSON;
+        $json = array_key_exists($key, $this->data) ? $this->data[$key] : $this->json;
         that($json)->nullOr()->inArray([0, 1]);
         $this->json = $json;
     }
 
-    private function setLabel($label) {
+    private function setLabel() {
+        $key = static::KEY_LABEL;
+        $label = array_key_exists($key, $this->data) ? $this->data[$key] : $this->label;
         that($label)->nullOr()->scalar()->minLength(0)->maxLength(100)->regex('/[a-zA-Z0-9, ._@]/');
         $this->label = $label;
     }
 
-    private function setHandlerBubble($handlerBubble) {
+    private function setHandlerBubble() {
+        $key = static::KEY_HANDLER_BUBBLE;
+        $handlerBubble = array_key_exists($key, $this->data) ? $this->data[$key] : $this->handlerBubble;
         Assertion::boolean($handlerBubble);
         $this->handlerBubble = $handlerBubble;
     }
 
-    private function setHandlerLoggerLevel($handlerLoggerLevel) {
+    private function setHandlerLoggerLevel() {
+        $key = static::KEY_HANDLER_LOGGER_LEVEL;
+        $handlerLoggerLevel = array_key_exists($key, $this->data) ? $this->data[$key] : $this->handlerLoggerLevel;
         Assertion::inArray($handlerLoggerLevel, [
             Logger::DEBUG,
             Logger::INFO,
@@ -134,17 +156,23 @@ class Config {
         $this->handlerLoggerLevel = $handlerLoggerLevel;
     }
 
-    private function setNoReload($noReload) {
+    private function setNoReload() {
+        $key = static::KEY_NO_RELOAD;
+        $noReload = array_key_exists($key, $this->data) ? $this->data[$key] : $this->noReload;
         that($noReload)->nullOr()->inArray([0, 1]);
         $this->noReload = $noReload;
     }
 
-    private function setPerformanceTracking($performanceTracking) {
+    private function setPerformanceTracking() {
+        $key = static::KEY_PERFORMANCE_TRACKING;
+        $performanceTracking = array_key_exists($key, $this->data) ? $this->data[$key] : $this->performanceTracking;
         that($performanceTracking)->nullOr()->inArray([0, 1]);
         $this->performanceTracking = $performanceTracking;
     }
 
-    private function setTo($to) {
+    private function setTo() {
+        $key = static::KEY_TO;
+        $to = array_key_exists($key, $this->data) ? $this->data[$key] : $this->to;
         that($to)->scalar()->minLength(1);
         $this->to = $to;
     }
