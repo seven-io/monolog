@@ -94,24 +94,6 @@ class Config {
         return $this->to;
     }
 
-    public function getExtra() {
-        $extra = [
-            self::KEY_DEBUG => $this->getDebug(),
-            self::KEY_FROM => $this->getFrom(),
-            self::KEY_JSON => $this->getJSON(),
-        ];
-
-        if ($this->getApp() === static::APP_SMS) $extra = array_merge($extra, [
-            self::KEY_FLASH => $this->getFlash(),
-            self::KEY_FOREIGN_ID => $this->getForeignID(),
-            self::KEY_LABEL => $this->getLabel(),
-            self::KEY_NO_RELOAD => $this->getNoReload(),
-            self::KEY_PERFORMANCE_TRACKING => $this->getPerformanceTracking(),
-        ]);
-
-        return $extra;
-    }
-
     private function getOption($key, $default) {
         return array_key_exists($key, $this->data) ? $this->data[$key] : $default;
     }

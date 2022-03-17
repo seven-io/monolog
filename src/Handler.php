@@ -17,7 +17,22 @@ class Handler extends AbstractProcessingHandler {
 
     public static function buildFromConfig(Config $cfg) {
         $client = new Client($cfg->getApiKey(), 'monolog');
-        $sender = new Sender($client, $cfg->getTo(), $cfg->getApp(), $cfg->getExtra());
+
+        $extra = [
+            Config::KEY_DEBUG => $cfg->getDebug(),
+            Config::KEY_FROM => $cfg->getFrom(),
+            Config::KEY_JSON => $cfg->getJSON(),
+        ];
+        if ($cfg->getApp() === Config::APP_SMS) $extra = array_merge($extra, [
+            Config::KEY_FLASH => $cfg->getFlash(),
+            Config::KEY_FOREIGN_ID => $cfg->getForeignID(),
+            Config::KEY_LABEL => $cfg->getLabel(),
+            Config::KEY_NO_RELOAD => $cfg->getNoReload(),
+            Config::KEY_PERFORMANCE_TRACKING => $cfg->getPerformanceTracking(),
+        ]);
+
+        $sender = new Sender($client, $cfg->getTo(), $cfg->getApp(), $extra);
+
         return new Handler($sender, $cfg);
     }
 
