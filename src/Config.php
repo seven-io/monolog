@@ -59,6 +59,7 @@ class Config {
     public function getExtra() {
         $extra = [
             self::KEY_DEBUG => $this->debug,
+            self::KEY_FROM => $this->from,
             self::KEY_JSON => $this->json,
         ];
 
