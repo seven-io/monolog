@@ -23,16 +23,16 @@ class Config {
 
     protected $apiKey;
     protected $app = self::APP_SMS;
-    protected $debug;
-    protected $flash;
+    protected $debug = false;
+    protected $flash = false;
     protected $foreignId;
     protected $from;
     protected $handlerLoggerLevel = Logger::CRITICAL;
     protected $handlerBubble = true;
-    protected $json;
+    protected $json = false;
     protected $label;
-    protected $noReload;
-    protected $performanceTracking;
+    protected $noReload = false;
+    protected $performanceTracking = false;
     protected $to;
 
     private $data;
@@ -51,11 +51,11 @@ class Config {
     }
 
     public function getDebug() {
-        return $this->debug;
+        return (int)$this->debug;
     }
 
     public function getFlash() {
-        return $this->flash;
+        return (int)$this->flash;
     }
 
     public function getForeignID() {
@@ -75,7 +75,7 @@ class Config {
     }
 
     public function getJSON() {
-        return $this->json;
+        return (int)$this->json;
     }
 
     public function getLabel() {
@@ -83,11 +83,11 @@ class Config {
     }
 
     public function getNoReload() {
-        return $this->noReload;
+        return (int)$this->noReload;
     }
 
     public function getPerformanceTracking() {
-        return $this->performanceTracking;
+        return (int)$this->performanceTracking;
     }
 
     public function getTo() {
@@ -96,27 +96,24 @@ class Config {
 
     public function getExtra() {
         $extra = [
-            self::KEY_DEBUG => $this->debug,
-            self::KEY_FROM => $this->from,
-            self::KEY_JSON => $this->json,
+            self::KEY_DEBUG => $this->getDebug(),
+            self::KEY_FROM => $this->getFrom(),
+            self::KEY_JSON => $this->getJSON(),
         ];
 
-        if ($this->app === static::APP_SMS) $extra = array_merge($extra, [
-            self::KEY_FLASH => $this->flash,
-            self::KEY_FOREIGN_ID => $this->foreignId,
-            self::KEY_LABEL => $this->label,
-            self::KEY_NO_RELOAD => $this->noReload,
-            self::KEY_PERFORMANCE_TRACKING => $this->performanceTracking,
+        if ($this->getApp() === static::APP_SMS) $extra = array_merge($extra, [
+            self::KEY_FLASH => $this->getFlash(),
+            self::KEY_FOREIGN_ID => $this->getForeignID(),
+            self::KEY_LABEL => $this->getLabel(),
+            self::KEY_NO_RELOAD => $this->getNoReload(),
+            self::KEY_PERFORMANCE_TRACKING => $this->getPerformanceTracking(),
         ]);
 
         return $extra;
     }
 
-    private function setApp() {
-        $key = static::KEY_APP;
-        $app = array_key_exists($key, $this->data) ? $this->data[$key] : $this->app;
-        that($app)->nullOr()->inArray([static::APP_SMS, static::APP_VOICE]);
-        $this->app = $app;
+    private function getOption($key, $default) {
+        return array_key_exists($key, $this->data) ? $this->data[$key] : $default;
     }
 
     private function init() {
@@ -136,64 +133,61 @@ class Config {
     }
 
     private function setApiKey() {
-        $key = static::KEY_API_KEY;
-        $apiKey = array_key_exists($key, $this->data) ? $this->data[$key] : $this->apiKey;
+        $apiKey = $this->getOption(static::KEY_API_KEY, $this->getApiKey());
         that($apiKey)->scalar()->minLength(1);
         $this->apiKey = $apiKey;
     }
 
+    private function setApp() {
+        $app = $this->getOption(static::KEY_APP, $this->getApp());
+        that($app)->nullOr()->inArray([static::APP_SMS, static::APP_VOICE]);
+        $this->app = $app;
+    }
+
     private function setDebug() {
-        $key = static::KEY_DEBUG;
-        $debug = array_key_exists($key, $this->data) ? $this->data[$key] : $this->debug;
+        $debug = $this->getOption(static::KEY_DEBUG, $this->getDebug());
         that($debug)->nullOr()->inArray([0, 1]);
         $this->debug = $debug;
     }
 
     private function setFlash() {
-        $key = static::KEY_FLASH;
-        $flash = array_key_exists($key, $this->data) ? $this->data[$key] : $this->flash;
+        $flash = $this->getOption(static::KEY_FLASH, $this->getFlash());
         that($flash)->nullOr()->inArray([0, 1]);
         $this->flash = $flash;
     }
 
     private function setForeignId() {
-        $key = static::KEY_FOREIGN_ID;
-        $foreignId = array_key_exists($key, $this->data) ? $this->data[$key] : $this->foreignId;
+        $foreignId = $this->getOption(static::KEY_FOREIGN_ID, $this->getForeignID());
         that($foreignId)->nullOr()->scalar()->minLength(0)->maxLength(64)->regex('/[a-zA-Z0-9, ._@]/');
         $this->foreignId = $foreignId;
     }
 
     private function setFrom() {
-        $key = static::KEY_FROM;
-        $from = array_key_exists($key, $this->data) ? $this->data[$key] : $this->from;
+        $from = $this->getOption(static::KEY_FROM, $this->getFrom());
         that($from)->nullOr()->scalar()->minLength(0)->maxLength(16);
         $this->from = $from;
     }
 
     private function setJSON() {
-        $key = static::KEY_JSON;
-        $json = array_key_exists($key, $this->data) ? $this->data[$key] : $this->json;
+        $json = $this->getOption(static::KEY_JSON, $this->getJSON());
         that($json)->nullOr()->inArray([0, 1]);
         $this->json = $json;
     }
 
     private function setLabel() {
-        $key = static::KEY_LABEL;
-        $label = array_key_exists($key, $this->data) ? $this->data[$key] : $this->label;
+        $label = $this->getOption(static::KEY_LABEL, $this->getLabel());
         that($label)->nullOr()->scalar()->minLength(0)->maxLength(100)->regex('/[a-zA-Z0-9, ._@]/');
         $this->label = $label;
     }
 
     private function setHandlerBubble() {
-        $key = static::KEY_HANDLER_BUBBLE;
-        $handlerBubble = array_key_exists($key, $this->data) ? $this->data[$key] : $this->handlerBubble;
+        $handlerBubble = $this->getOption(static::KEY_HANDLER_BUBBLE, $this->getHandlerBubble());
         Assertion::boolean($handlerBubble);
         $this->handlerBubble = $handlerBubble;
     }
 
     private function setHandlerLoggerLevel() {
-        $key = static::KEY_HANDLER_LOGGER_LEVEL;
-        $handlerLoggerLevel = array_key_exists($key, $this->data) ? $this->data[$key] : $this->handlerLoggerLevel;
+        $handlerLoggerLevel = $this->getOption(static::KEY_HANDLER_LOGGER_LEVEL, $this->getHandlerLoggerLevel());
         Assertion::inArray($handlerLoggerLevel, [
             Logger::DEBUG,
             Logger::INFO,
@@ -208,22 +202,19 @@ class Config {
     }
 
     private function setNoReload() {
-        $key = static::KEY_NO_RELOAD;
-        $noReload = array_key_exists($key, $this->data) ? $this->data[$key] : $this->noReload;
+        $noReload = $this->getOption(static::KEY_NO_RELOAD, $this->getNoReload());
         that($noReload)->nullOr()->inArray([0, 1]);
         $this->noReload = $noReload;
     }
 
     private function setPerformanceTracking() {
-        $key = static::KEY_PERFORMANCE_TRACKING;
-        $performanceTracking = array_key_exists($key, $this->data) ? $this->data[$key] : $this->performanceTracking;
+        $performanceTracking = $this->getOption(static::KEY_PERFORMANCE_TRACKING, $this->getPerformanceTracking());
         that($performanceTracking)->nullOr()->inArray([0, 1]);
         $this->performanceTracking = $performanceTracking;
     }
 
     private function setTo() {
-        $key = static::KEY_TO;
-        $to = array_key_exists($key, $this->data) ? $this->data[$key] : $this->to;
+        $to = $this->getOption(static::KEY_TO, $this->getTo());
         that($to)->scalar()->minLength(1);
         $this->to = $to;
     }
