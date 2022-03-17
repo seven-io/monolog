@@ -7,6 +7,9 @@ use function Assert\that;
 
 class Config {
     const KEY_API_KEY = 'client';
+    const KEY_APP = '_app';
+    const APP_SMS = 'sms';
+    const APP_VOICE = 'voice';
     const KEY_DEBUG = 'debug';
     const KEY_FLASH = 'flash';
     const KEY_FOREIGN_ID = 'foreign_id';
@@ -19,6 +22,7 @@ class Config {
     const KEY_PERFORMANCE_TRACKING = 'performance_tracking';
     const KEY_TO = 'to';
 
+    public $app;
     public $client;
     public $debug;
     public $flash;
@@ -38,6 +42,7 @@ class Config {
             static::KEY_HANDLER_LOGGER_LEVEL => Logger::CRITICAL,
         ], $data);
 
+        $this->setApp($data[static::KEY_APP]);
         $this->setClient($data[static::KEY_API_KEY]);
         $this->setDebug($data[static::KEY_DEBUG]);
         $this->setFlash($data[static::KEY_FLASH]);
@@ -52,15 +57,25 @@ class Config {
     }
 
     public function getExtra() {
-        return [
+        $extra = [
             self::KEY_DEBUG => $this->debug,
+            self::KEY_JSON => $this->json,
+        ];
+
+        if ($this->app === static::APP_SMS) $extra = array_merge($extra, [
             self::KEY_FLASH => $this->flash,
             self::KEY_FOREIGN_ID => $this->foreignId,
-            self::KEY_JSON => $this->json,
             self::KEY_LABEL => $this->label,
             self::KEY_NO_RELOAD => $this->noReload,
             self::KEY_PERFORMANCE_TRACKING => $this->performanceTracking,
-        ];
+        ]);
+
+        return $extra;
+    }
+
+    private function setApp($app) {
+        that($app)->nullOr()->inArray([static::APP_SMS, static::APP_VOICE]);
+        $this->app = $app;
     }
 
     private function setClient($apiKey) {
