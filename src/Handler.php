@@ -1,6 +1,7 @@
 <?php namespace Sms77\Monolog;
 
 use Monolog\Handler\AbstractProcessingHandler;
+use Sms77\Api\Client;
 
 class Handler extends AbstractProcessingHandler {
     private $sender;
@@ -16,7 +17,8 @@ class Handler extends AbstractProcessingHandler {
     }
 
     public static function buildFromConfig(Config $cfg) {
-        $sender = new Sender($cfg->client, $cfg->to, $cfg->app, $cfg->getExtra());
+        $client = new Client($cfg->apiKey, 'monolog');
+        $sender = new Sender($client, $cfg->to, $cfg->app, $cfg->getExtra());
         return new Handler($sender, $cfg);
     }
 

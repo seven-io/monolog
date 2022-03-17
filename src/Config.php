@@ -2,7 +2,6 @@
 
 use Assert\Assertion;
 use Monolog\Logger;
-use Sms77\Api\Client;
 use function Assert\that;
 
 class Config {
@@ -22,8 +21,8 @@ class Config {
     const KEY_PERFORMANCE_TRACKING = 'performance_tracking';
     const KEY_TO = 'to';
 
-    public $app;
-    public $client;
+    public $apiKey;
+    public $app = self::APP_SMS;
     public $debug;
     public $flash;
     public $foreignId;
@@ -70,7 +69,7 @@ class Config {
 
     private function init() {
         $this->setApp();
-        $this->setClient();
+        $this->setApiKey();
         $this->setDebug();
         $this->setFlash();
         $this->setForeignId();
@@ -84,11 +83,11 @@ class Config {
         $this->setTo();
     }
 
-    private function setClient() {
+    private function setApiKey() {
         $key = static::KEY_API_KEY;
-        $apiKey = array_key_exists($key, $this->data) ? $this->data[$key] : $this->client;
+        $apiKey = array_key_exists($key, $this->data) ? $this->data[$key] : $this->apiKey;
         that($apiKey)->scalar()->minLength(1);
-        $this->client = new Client($apiKey, 'monolog');
+        $this->apiKey = $apiKey;
     }
 
     private function setDebug() {
