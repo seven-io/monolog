@@ -5,7 +5,7 @@ use Monolog\Logger;
 use function Assert\that;
 
 class Config {
-    const KEY_API_KEY = 'client';
+    const KEY_API_KEY = 'apiKey';
     const KEY_APP = '_app';
     const APP_SMS = 'sms';
     const APP_VOICE = 'voice';
