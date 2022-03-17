@@ -101,7 +101,7 @@ class Config {
     }
 
     private function setFrom($from) {
-        that($from)->scalar()->minLength(0)->maxLength(16);
+        that($from)->nullOr()->scalar()->minLength(0)->maxLength(16);
         $this->from = $from;
     }
 
