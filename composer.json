@@ -1,20 +1,20 @@
 {
     "authors": [
         {
-            "email": "support@sms77.io",
-            "homepage": "https://www.sms77.io",
-            "name": "sms77 e.K.",
+            "email": "support@seven.io",
+            "homepage": "https://www.seven.io",
+            "name": "seven communications GmbH & Co. KG",
             "role": "Developer"
         }
     ],
     "autoload": {
         "psr-4": {
-            "Sms77\\Monolog\\": "src/"
+            "Seven\\Monolog\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Sms77\\Monolog\\Tests\\": "tests/"
+            "Seven\\Monolog\\Tests\\": "tests/"
         }
     },
     "config": {
@@ -22,16 +22,16 @@
             "php": "5.6.40"
         }
     },
-    "description": "A Monolog Handler for sending SMS via sms77",
-    "homepage": "https://github.com/sms77io/monolog",
+    "description": "A Monolog Handler for sending SMS via seven",
+    "homepage": "https://github.com/seven-io/monolog",
     "keywords": [
         "sms",
-        "sms77",
+        "seven",
         "monolog",
         "handler"
     ],
     "license": "MIT",
-    "name": "sms77/monolog",
+    "name": "seven.io/monolog",
     "require": {
         "php": ">=5.6",
         "monolog/monolog": "^1",
@@ -42,9 +42,9 @@
         "phpunit/phpunit": "^5"
     },
     "support": {
-        "docs": "https://github.com/sms77io/monolog",
-        "email": "support@sms77.io",
-        "rss": "https://www.sms77.io/de/feed/",
-        "source": "https://github.com/sms77io/monolog"
+        "docs": "https://github.com/seven-io/monolog",
+        "email": "support@seven.io",
+        "rss": "https://www.sms77.io/en/feed/",
+        "source": "https://github.com/seven-io/monolog"
     }
 }

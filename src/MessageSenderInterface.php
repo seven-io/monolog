@@ -1,4 +1,4 @@
-<?php namespace Sms77\Monolog;
+<?php namespace Seven\Monolog;
 
 interface MessageSenderInterface {
     /**

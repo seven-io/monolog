@@ -1,16 +1,16 @@
-<?php namespace Sms77\Monolog\Tests;
+<?php namespace Seven\Monolog\Tests;
 
 use Monolog\Logger;
 use PHPUnit_Framework_TestCase;
-use Sms77\Monolog\Config;
-use Sms77\Monolog\Handler;
+use Seven\Monolog\Config;
+use Seven\Monolog\Handler;
 
 class SmsTest extends PHPUnit_Framework_TestCase {
     /** @test */
     public function it_should_act_like_sending_a_message() {
         $spy = new MessageSenderMock;
         $cfg = new Config([
-            Config::KEY_API_KEY => getenv('SMS77_DUMMY_API_KEY'),
+            Config::KEY_API_KEY => getenv('SEVEN_API_KEY_SANDBOX'),
             Config::KEY_DEBUG => 1,
             Config::KEY_FLASH => 0,
             Config::KEY_FOREIGN_ID => 'mock',
@@ -37,7 +37,7 @@ class SmsTest extends PHPUnit_Framework_TestCase {
      */
     public function it_should_really_send_message() {
         $cfg = [
-            Config::KEY_API_KEY => getenv('SMS77_API_KEY'),
+            Config::KEY_API_KEY => getenv('SEVEN_API_KEY_SANDBOX'),
             Config::KEY_DEBUG => 0,
             Config::KEY_FLASH => 1,
             Config::KEY_FOREIGN_ID => 'live',

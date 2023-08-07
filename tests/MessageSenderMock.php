@@ -1,6 +1,6 @@
-<?php namespace Sms77\Monolog\Tests;
+<?php namespace Seven\Monolog\Tests;
 
-use Sms77\Monolog\MessageSenderInterface;
+use Seven\Monolog\MessageSenderInterface;
 
 class MessageSenderMock implements MessageSenderInterface {
     public $sent;

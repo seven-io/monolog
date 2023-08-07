@@ -1,4 +1,4 @@
-<?php namespace Sms77\Monolog;
+<?php namespace Seven\Monolog;
 
 use Sms77\Api\Client;
 
@@ -20,6 +20,6 @@ class Sender implements MessageSenderInterface {
         $to = $this->to;
 
         if ($this->app === Config::APP_VOICE) $this->client->voice($to, $message, $extra);
-        else $this->client->sms($to, $message, $extra);
+        else $this->client->sms($to, $message, array_merge($extra, ['type' => 'direct']));
     }
 }

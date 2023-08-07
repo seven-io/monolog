@@ -1,4 +1,4 @@
-<?php namespace Sms77\Monolog;
+<?php namespace Seven\Monolog;
 
 use Monolog\Handler\AbstractProcessingHandler;
 use Sms77\Api\Client;
