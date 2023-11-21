@@ -24,7 +24,6 @@ $apiKey = getenv('SEVEN_API_KEY'); // seven API key required for sending
 // SMS
 $cfg = [
     Config::KEY_API_KEY => $apiKey,
-    Config::KEY_DEBUG => 0, // 0 or 1
     Config::KEY_FLASH => 0, // 0 or 1
     Config::KEY_FOREIGN_ID => 'MyForeignID', // optional foreign ID max 64 chars consisting of a-zA-Z0-9, ._@
     Config::KEY_FROM => 'Monolog', // optional sender - max 11 alphanumeric or 16 numeric characters
@@ -43,7 +42,6 @@ $logger
 $cfg = [
     Config::KEY_API_KEY => $apiKey,
     Config::KEY_APP => Config::APP_VOICE,
-    Config::KEY_DEBUG => 0, // 0 or 1
     Config::KEY_FROM => '+4901234567890', // optional sender - must be verified or a shared inbound number
     Config::KEY_JSON => 0, // 0 or 1
     Config::KEY_TO => '+491234567890', // recipient(s) separated by comma

@@ -19,7 +19,6 @@ class Handler extends AbstractProcessingHandler {
         $client = new Client($cfg->getApiKey(), 'monolog');
 
         $extra = [
-            Config::KEY_DEBUG => $cfg->getDebug(),
             Config::KEY_FROM => $cfg->getFrom(),
             Config::KEY_JSON => $cfg->getJSON(),
         ];

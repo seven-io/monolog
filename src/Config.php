@@ -9,7 +9,6 @@ class Config {
     const APP_VOICE = 'voice';
     const KEY_API_KEY = 'apiKey';
     const KEY_APP = '_app';
-    const KEY_DEBUG = 'debug';
     const KEY_FLASH = 'flash';
     const KEY_FOREIGN_ID = 'foreign_id';
     const KEY_FROM = 'from';
@@ -23,7 +22,6 @@ class Config {
 
     protected $apiKey;
     protected $app = self::APP_SMS;
-    protected $debug = false;
     protected $flash = false;
     protected $foreignId;
     protected $from;
@@ -48,10 +46,6 @@ class Config {
 
     public function getApp() {
         return $this->app;
-    }
-
-    public function getDebug() {
-        return (int)$this->debug;
     }
 
     public function getFlash() {
@@ -101,7 +95,6 @@ class Config {
     private function init() {
         $this->setApp();
         $this->setApiKey();
-        $this->setDebug();
         $this->setFlash();
         $this->setForeignId();
         $this->setFrom();
@@ -124,12 +117,6 @@ class Config {
         $app = $this->getOption(static::KEY_APP, $this->getApp());
         that($app)->nullOr()->inArray([static::APP_SMS, static::APP_VOICE]);
         $this->app = $app;
-    }
-
-    private function setDebug() {
-        $debug = $this->getOption(static::KEY_DEBUG, $this->getDebug());
-        that($debug)->nullOr()->inArray([0, 1]);
-        $this->debug = $debug;
     }
 
     private function setFlash() {

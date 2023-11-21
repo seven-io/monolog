@@ -11,7 +11,6 @@ class SmsTest extends PHPUnit_Framework_TestCase {
         $spy = new MessageSenderMock;
         $cfg = new Config([
             Config::KEY_API_KEY => getenv('SEVEN_API_KEY_SANDBOX'),
-            Config::KEY_DEBUG => 1,
             Config::KEY_FLASH => 0,
             Config::KEY_FOREIGN_ID => 'mock',
             Config::KEY_FROM => 'MonologTest',
@@ -38,7 +37,6 @@ class SmsTest extends PHPUnit_Framework_TestCase {
     public function it_should_really_send_message() {
         $cfg = [
             Config::KEY_API_KEY => getenv('SEVEN_API_KEY_SANDBOX'),
-            Config::KEY_DEBUG => 0,
             Config::KEY_FLASH => 1,
             Config::KEY_FOREIGN_ID => 'live',
             Config::KEY_FROM => 'Monolog',

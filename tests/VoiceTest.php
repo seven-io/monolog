@@ -12,7 +12,6 @@ class VoiceTest extends PHPUnit_Framework_TestCase {
         $cfg = new Config([
             Config::KEY_API_KEY => getenv('SEVEN_API_KEY_SANDBOX'),
             Config::KEY_APP => Config::APP_VOICE,
-            Config::KEY_DEBUG => 1,
             Config::KEY_FROM => 'MonologTest',
             Config::KEY_JSON => 1,
             Config::KEY_TO => '+491716992343',
@@ -35,7 +34,6 @@ class VoiceTest extends PHPUnit_Framework_TestCase {
         $cfg = [
             Config::KEY_API_KEY => getenv('SEVEN_API_KEY_SANDBOX'),
             Config::KEY_APP => Config::APP_VOICE,
-            Config::KEY_DEBUG => 0,
             Config::KEY_FROM => 'Monolog',
             Config::KEY_JSON => 0,
             Config::KEY_TO => '+491716992343',
