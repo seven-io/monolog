@@ -26,7 +26,6 @@ class Handler extends AbstractProcessingHandler {
             Config::KEY_FLASH => $cfg->getFlash(),
             Config::KEY_FOREIGN_ID => $cfg->getForeignID(),
             Config::KEY_LABEL => $cfg->getLabel(),
-            Config::KEY_NO_RELOAD => $cfg->getNoReload(),
             Config::KEY_PERFORMANCE_TRACKING => $cfg->getPerformanceTracking(),
         ]);
 

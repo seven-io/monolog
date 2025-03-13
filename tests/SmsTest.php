@@ -16,7 +16,6 @@ class SmsTest extends PHPUnit_Framework_TestCase {
             Config::KEY_FROM => 'MonologTest',
             Config::KEY_JSON => 1,
             Config::KEY_LABEL => 'mock',
-            Config::KEY_NO_RELOAD => 0,
             Config::KEY_PERFORMANCE_TRACKING => 1,
             Config::KEY_TO => '+491716992343',
         ]);
@@ -42,7 +41,6 @@ class SmsTest extends PHPUnit_Framework_TestCase {
             Config::KEY_FROM => 'Monolog',
             Config::KEY_JSON => 0,
             Config::KEY_LABEL => 'live',
-            Config::KEY_NO_RELOAD => 1,
             Config::KEY_PERFORMANCE_TRACKING => 0,
             Config::KEY_TO => '+491716992343',
         ];

@@ -16,7 +16,6 @@ class Config {
     const KEY_HANDLER_LOGGER_LEVEL = 'handler_logger_level';
     const KEY_JSON = 'json';
     const KEY_LABEL = 'label';
-    const KEY_NO_RELOAD = 'no_reload';
     const KEY_PERFORMANCE_TRACKING = 'performance_tracking';
     const KEY_TO = 'to';
 
@@ -29,7 +28,6 @@ class Config {
     protected $handlerBubble = true;
     protected $json = false;
     protected $label;
-    protected $noReload = false;
     protected $performanceTracking = false;
     protected $to;
 
@@ -76,10 +74,6 @@ class Config {
         return $this->label;
     }
 
-    public function getNoReload() {
-        return (int)$this->noReload;
-    }
-
     public function getPerformanceTracking() {
         return (int)$this->performanceTracking;
     }
@@ -102,7 +96,6 @@ class Config {
         $this->setHandlerLoggerLevel();
         $this->setLabel();
         $this->setJSON();
-        $this->setNoReload();
         $this->setPerformanceTracking();
         $this->setTo();
     }
@@ -168,12 +161,6 @@ class Config {
             Logger::EMERGENCY,
         ]);
         $this->handlerLoggerLevel = $handlerLoggerLevel;
-    }
-
-    private function setNoReload() {
-        $noReload = $this->getOption(static::KEY_NO_RELOAD, $this->getNoReload());
-        that($noReload)->nullOr()->inArray([0, 1]);
-        $this->noReload = $noReload;
     }
 
     private function setPerformanceTracking() {
