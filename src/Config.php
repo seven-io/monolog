@@ -14,7 +14,6 @@ class Config {
     const KEY_FROM = 'from';
     const KEY_HANDLER_BUBBLE = 'handler_bubble';
     const KEY_HANDLER_LOGGER_LEVEL = 'handler_logger_level';
-    const KEY_JSON = 'json';
     const KEY_LABEL = 'label';
     const KEY_PERFORMANCE_TRACKING = 'performance_tracking';
     const KEY_TO = 'to';
@@ -26,7 +25,6 @@ class Config {
     protected $from;
     protected $handlerLoggerLevel = Logger::CRITICAL;
     protected $handlerBubble = true;
-    protected $json = false;
     protected $label;
     protected $performanceTracking = false;
     protected $to;
@@ -66,10 +64,6 @@ class Config {
         return $this->handlerLoggerLevel;
     }
 
-    public function getJSON() {
-        return (int)$this->json;
-    }
-
     public function getLabel() {
         return $this->label;
     }
@@ -95,7 +89,6 @@ class Config {
         $this->setHandlerBubble();
         $this->setHandlerLoggerLevel();
         $this->setLabel();
-        $this->setJSON();
         $this->setPerformanceTracking();
         $this->setTo();
     }
@@ -128,12 +121,6 @@ class Config {
         $from = $this->getOption(static::KEY_FROM, $this->getFrom());
         that($from)->nullOr()->scalar()->minLength(0)->maxLength(16);
         $this->from = $from;
-    }
-
-    private function setJSON() {
-        $json = $this->getOption(static::KEY_JSON, $this->getJSON());
-        that($json)->nullOr()->inArray([0, 1]);
-        $this->json = $json;
     }
 
     private function setLabel() {

@@ -20,7 +20,6 @@ class Handler extends AbstractProcessingHandler {
 
         $extra = [
             Config::KEY_FROM => $cfg->getFrom(),
-            Config::KEY_JSON => $cfg->getJSON(),
         ];
         if ($cfg->getApp() === Config::APP_SMS) $extra = array_merge($extra, [
             Config::KEY_FLASH => $cfg->getFlash(),
