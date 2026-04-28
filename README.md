@@ -1,11 +1,33 @@
-<img src="https://www.seven.io/wp-content/uploads/Logo.svg" width="250" />
+<p align="center">
+  <img src="https://www.seven.io/wp-content/uploads/Logo.svg" width="250" alt="seven logo" />
+</p>
 
-# Monolog Handler
+<h1 align="center">seven Handler for Monolog</h1>
 
-Send log entries by SMS or make text-to-speech calls via [seven](https://www.seven.io).
+<p align="center">
+  Forward <a href="https://github.com/Seldaek/monolog">Monolog</a> log entries as SMS or text-to-speech calls via the seven gateway.
+</p>
+
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-teal.svg" alt="MIT License" /></a>
+  <img src="https://img.shields.io/badge/Monolog-2%20|%203-blue" alt="Monolog 2 | 3" />
+  <img src="https://img.shields.io/badge/PHP-7.2%2B-purple" alt="PHP 7.2+" />
+  <a href="https://packagist.org/packages/seven.io/monolog"><img src="https://img.shields.io/packagist/v/seven.io/monolog" alt="Packagist" /></a>
+</p>
+
+---
+
+## Features
+
+- **Monolog Handler** - Drop-in handler for any Monolog logger instance
+- **SMS or Voice** - Choose between SMS and text-to-speech for the log channel
+
+## Prerequisites
+
+- PHP 7.2+
+- A [seven account](https://www.seven.io/) with API key ([How to get your API key](https://help.seven.io/en/developer/where-do-i-find-my-api-key))
 
 ## Installation
-This package can be installed via composer.
 
 ```bash
 composer require seven.io/monolog
@@ -18,39 +40,26 @@ use Seven\Monolog\Config;
 use Seven\Monolog\Handler;
 use Monolog\Logger;
 
-$logger = Logger('demo');
-$apiKey = getenv('SEVEN_API_KEY'); // seven API key required for sending
+$apiKey = getenv('SEVEN_API_KEY');
+$logger = new Logger('demo');
 
-// SMS
-$cfg = [
-    Config::KEY_API_KEY => $apiKey,
-    Config::KEY_FLASH => 0, // 0 or 1
-    Config::KEY_FOREIGN_ID => 'MyForeignID', // optional foreign ID max 64 chars consisting of a-zA-Z0-9, ._@
-    Config::KEY_FROM => 'Monolog', // optional sender - max 11 alphanumeric or 16 numeric characters
-    Config::KEY_LABEL => 'MyLabel', // optional label max 100 chars consisting of a-zA-Z0-9, ._@
-    Config::KEY_PERFORMANCE_TRACKING => 0, // 0 or 1
-    Config::KEY_TO => '+491234567890', // recipient(s) separated by comma
-];
-$handler = Handler::buildFromArray($cfg);
-$logger
-    ->pushHandler($handler)
-    ->addCritical('critical bug');
+// Forward WARNING-and-above entries as SMS
+$cfg = new Config([
+    'apiKey'     => $apiKey,
+    'from'       => 'Logger',
+    'recipients' => '+491234567890',
+]);
 
-// text-to-speech call
-$cfg = [
-    Config::KEY_API_KEY => $apiKey,
-    Config::KEY_APP => Config::APP_VOICE,
-    Config::KEY_FROM => '+4901234567890', // optional sender - must be verified or a shared inbound number
-    Config::KEY_TO => '+491234567890', // recipient(s) separated by comma
-];
-$handler = Handler::buildFromArray($cfg);
-$logger
-    ->pushHandler($handler)
-    ->addCritical('critical bug');
+$logger->pushHandler(new Handler($cfg, Logger::WARNING));
+$logger->warning('Something is wrong!');
 ```
 
-### Support
+Switch the channel to voice by setting `type` to `voice` in the `Config`.
 
-Need help? Feel free to [contact us](https://www.seven.io/en/company/contact/).
+## Support
 
-[![MIT](https://img.shields.io/badge/License-MIT-teal.svg)](LICENSE)
+Need help? Feel free to [contact us](https://www.seven.io/en/company/contact/) or [open an issue](https://github.com/seven-io/monolog/issues).
+
+## License
+
+[MIT](LICENSE)
